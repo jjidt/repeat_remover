@@ -1,14 +1,25 @@
 var repeatRemover = function (sentence) {
-	var split_words = sentence.split(" ");
-	for (var i = 0; i < split_words.length; i++) {
-		if (split_words[i].toLowerCase() === split_words[i+1]) {
+	var splitWords = sentence.split(" ");
+	for (var i = 0; i < splitWords.length -1; i++) {
+		if (splitWords[i].toLowerCase() === splitWords[i+1] || splitWords[i].toLowerCase() === splitWords[(i+1)].replace(/\W/,"")) {
 			if (i > 0) {
-				split_words.splice(i,1);
+				splitWords.splice(i,1);
 			}
 			else {
-				split_words.splice(i+1,1);
+				splitWords.splice(i+1,1);
 			}
 		}
 	}
-	return split_words.join(" ");
+	return splitWords.join(" ");
 };
+
+$(document).ready(function(){
+  $("form#sentence").submit(function(event){
+    $("#outputArea").css({"font-size": "0"});
+    var boxInput = $("input#wordBox").val();
+    var output = repeatRemover(boxInput);
+    $("#outputArea").text(output);
+    event.preventDefault();
+    $("#outputArea").animate({"font-size": "60px"}, 500);
+  });
+});
