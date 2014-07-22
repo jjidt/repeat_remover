@@ -1,15 +1,21 @@
 var repeatRemover = function (sentence) {
   var splitWords = sentence.split(" ");
   for (var i = 0; i < splitWords.length -1; i++) {
-	if (splitWords[i].toLowerCase() === splitWords[i+1] || splitWords[i].toLowerCase() === splitWords[(i+1)].replace(/\W/,"")) {
-	  if (i > 0) {
-		splitWords.splice(i,1);
-	  } else {
-		splitWords.splice(i+1,1);
-	  }
+    var currentWord = splitWords[i].toLowerCase();
+    var nextWord = splitWords[(i+1)].toLowerCase();
+    var nextWordNoPunctuation = nextWord.replace(/\W/,"");
+
+    if (currentWord === nextWord ||
+        currentWord === nextWordNoPunctuation) {
+      if (i > 0) {
+        splitWords.splice(i,1);
+      } else {
+        splitWords.splice(i+1,1);
+      }
     }
   }
-return splitWords.join(" ");
+
+  return splitWords.join(" ");
 };
 
 $(document).ready(function(){
